@@ -276,7 +276,7 @@ function BlockFormatDropDown({
   );
 }
 
-function Divider(): JSX.Element {
+export function Divider(): JSX.Element {
   return <div className="divider" />;
 }
 
@@ -395,36 +395,6 @@ function ElementFormatDropdown({
       >
         <i className="icon justify-align" />
         <span className="text">Justify Align</span>
-      </DropDownItem>
-      <DropDownItem
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "start");
-        }}
-        className="item"
-      >
-        <i
-          className={`icon ${
-            isRTL
-              ? ELEMENT_FORMAT_OPTIONS.start.iconRTL
-              : ELEMENT_FORMAT_OPTIONS.start.icon
-          }`}
-        />
-        <span className="text">Start Align</span>
-      </DropDownItem>
-      <DropDownItem
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "end");
-        }}
-        className="item"
-      >
-        <i
-          className={`icon ${
-            isRTL
-              ? ELEMENT_FORMAT_OPTIONS.end.iconRTL
-              : ELEMENT_FORMAT_OPTIONS.end.icon
-          }`}
-        />
-        <span className="text">End Align</span>
       </DropDownItem>
       <Divider />
       <DropDownItem

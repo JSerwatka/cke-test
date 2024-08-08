@@ -18,6 +18,7 @@ import {
   $isRangeSelection,
   $isTextNode,
   COMMAND_PRIORITY_LOW,
+  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   LexicalEditor,
   SELECTION_CHANGE_COMMAND,
@@ -29,6 +30,7 @@ import { createPortal } from "react-dom";
 import { getDOMRangeRect } from "../../utils/getDOMRangeRect";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { setFloatingElemPosition } from "../../utils/setFloatingElemPosition";
+import { Divider } from "../ToolbarPlugin";
 
 function TextFormatFloatingToolbar({
   editor,
@@ -221,38 +223,7 @@ function TextFormatFloatingToolbar({
           >
             <i className="format strikethrough" />
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
-            }}
-            className={"popup-item spaced " + (isSubscript ? "active" : "")}
-            title="Subscript"
-            aria-label="Format Subscript"
-          >
-            <i className="format subscript" />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript");
-            }}
-            className={"popup-item spaced " + (isSuperscript ? "active" : "")}
-            title="Superscript"
-            aria-label="Format Superscript"
-          >
-            <i className="format superscript" />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-            }}
-            className={"popup-item spaced " + (isCode ? "active" : "")}
-            aria-label="Insert code block"
-          >
-            <i className="format code" />
-          </button>
+
           <button
             type="button"
             onClick={insertLink}
@@ -260,6 +231,47 @@ function TextFormatFloatingToolbar({
             aria-label="Insert link"
           >
             <i className="format link" />
+          </button>
+          <Divider />
+          <button
+            type="button"
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+            }}
+            className={"popup-item spaced "}
+            aria-label="Format text to left aligned"
+          >
+            <i className="format left-align" />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+            }}
+            className={"popup-item spaced "}
+            aria-label="Format text to center aligned"
+          >
+            <i className="format center-align" />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+            }}
+            className={"popup-item spaced "}
+            aria-label="Format text to right aligned"
+          >
+            <i className="format right-align" />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
+            }}
+            className={"popup-item spaced "}
+            aria-label="Format text to justify aligned"
+          >
+            <i className="format justify-align" />
           </button>
         </>
       )}
