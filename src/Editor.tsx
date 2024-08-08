@@ -22,12 +22,9 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { CAN_USE_DOM } from "shared/canUseDOM";
 
-import { createWebsocketProvider } from "./collaboration";
-import { useSettings } from "./context/SettingsContext";
 import { useSharedHistoryContext } from "./context/SharedHistoryContext";
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
-import CodeActionMenuPlugin from "./plugins/CodeActionMenuPlugin";
 import ComponentPickerPlugin from "./plugins/ComponentPickerPlugin";
 import DragDropPaste from "./plugins/DragDropPastePlugin";
 import DraggableBlockPlugin from "./plugins/DraggableBlockPlugin";
@@ -113,7 +110,6 @@ export default function Editor(): JSX.Element {
         {floatingAnchorElem && !isSmallWidthViewport && (
           <>
             <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
-            <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
             <FloatingLinkEditorPlugin
               anchorElem={floatingAnchorElem}
               isLinkEditMode={isLinkEditMode}
