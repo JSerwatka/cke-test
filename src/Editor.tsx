@@ -30,44 +30,21 @@ import { createWebsocketProvider } from "./collaboration";
 import { useSettings } from "./context/SettingsContext";
 import { useSharedHistoryContext } from "./context/SharedHistoryContext";
 import ActionsPlugin from "./plugins/ActionsPlugin";
-import AutocompletePlugin from "./plugins/AutocompletePlugin";
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import CodeActionMenuPlugin from "./plugins/CodeActionMenuPlugin";
-import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
-import CollapsiblePlugin from "./plugins/CollapsiblePlugin";
-import CommentPlugin from "./plugins/CommentPlugin";
 import ComponentPickerPlugin from "./plugins/ComponentPickerPlugin";
 import ContextMenuPlugin from "./plugins/ContextMenuPlugin";
 import DragDropPaste from "./plugins/DragDropPastePlugin";
 import DraggableBlockPlugin from "./plugins/DraggableBlockPlugin";
 import EmojiPickerPlugin from "./plugins/EmojiPickerPlugin";
 import EmojisPlugin from "./plugins/EmojisPlugin";
-import EquationsPlugin from "./plugins/EquationsPlugin";
-import ExcalidrawPlugin from "./plugins/ExcalidrawPlugin";
-import FigmaPlugin from "./plugins/FigmaPlugin";
 import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 import FloatingTextFormatToolbarPlugin from "./plugins/FloatingTextFormatToolbarPlugin";
 import ImagesPlugin from "./plugins/ImagesPlugin";
-import InlineImagePlugin from "./plugins/InlineImagePlugin";
-import KeywordsPlugin from "./plugins/KeywordsPlugin";
-import { LayoutPlugin } from "./plugins/LayoutPlugin/LayoutPlugin";
 import LinkPlugin from "./plugins/LinkPlugin";
-import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
-import MarkdownShortcutPlugin from "./plugins/MarkdownShortcutPlugin";
-import { MaxLengthPlugin } from "./plugins/MaxLengthPlugin";
-import MentionsPlugin from "./plugins/MentionsPlugin";
-import PageBreakPlugin from "./plugins/PageBreakPlugin";
-import PollPlugin from "./plugins/PollPlugin";
-import SpeechToTextPlugin from "./plugins/SpeechToTextPlugin";
-import TabFocusPlugin from "./plugins/TabFocusPlugin";
-import TableCellActionMenuPlugin from "./plugins/TableActionMenuPlugin";
-import TableCellResizer from "./plugins/TableCellResizer";
-import TableHoverActionsPlugin from "./plugins/TableHoverActionsPlugin";
-import TableOfContentsPlugin from "./plugins/TableOfContentsPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
-import TwitterPlugin from "./plugins/TwitterPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 
@@ -144,13 +121,9 @@ export default function Editor(): JSX.Element {
         <EmojiPickerPlugin />
         <AutoEmbedPlugin />
 
-        <MentionsPlugin />
         <EmojisPlugin />
         <HashtagPlugin />
-        <KeywordsPlugin />
-        <SpeechToTextPlugin />
         <AutoLinkPlugin />
-        <CommentPlugin
           providerFactory={isCollab ? createWebsocketProvider : undefined}
         />
         {isRichText ? (
@@ -174,8 +147,6 @@ export default function Editor(): JSX.Element {
               }
               ErrorBoundary={LexicalErrorBoundary}
             />
-            <MarkdownShortcutPlugin />
-            <CodeHighlightPlugin />
             <ListPlugin />
             <CheckListPlugin />
             <ListMaxIndentLevelPlugin maxDepth={7} />
@@ -183,24 +154,12 @@ export default function Editor(): JSX.Element {
               hasCellMerge={tableCellMerge}
               hasCellBackgroundColor={tableCellBackgroundColor}
             />
-            <TableCellResizer />
-            <TableHoverActionsPlugin />
             <ImagesPlugin />
-            <InlineImagePlugin />
             <LinkPlugin />
-            <PollPlugin />
-            <TwitterPlugin />
             <YouTubePlugin />
-            <FigmaPlugin />
             <ClickableLinkPlugin disabled={isEditable} />
             <HorizontalRulePlugin />
-            <EquationsPlugin />
-            <ExcalidrawPlugin />
-            <TabFocusPlugin />
             <TabIndentationPlugin />
-            <CollapsiblePlugin />
-            <PageBreakPlugin />
-            <LayoutPlugin />
             {floatingAnchorElem && !isSmallWidthViewport && (
               <>
                 <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
