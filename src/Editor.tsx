@@ -84,7 +84,6 @@ export default function Editor(): JSX.Element {
         <ComponentPickerPlugin />
         <EmojiPickerPlugin />
         <AutoEmbedPlugin />
-
         <EmojisPlugin />
         <HashtagPlugin />
         <AutoLinkPlugin />
