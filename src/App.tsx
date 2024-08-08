@@ -1,16 +1,26 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Editor from "./Editor";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
+import PlaygroundNodes from "./nodes/PlaygroundNodes";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const initialConfig = {
+    editorState: null,
+    namespace: "Playground",
+    nodes: [...PlaygroundNodes],
+    onError: (error: Error) => {
+      throw error;
+    },
+    theme: PlaygroundEditorTheme,
+  };
   return (
     <div className="App">
-      <h1>Vite + React</h1>
-      <Editor />
+      <LexicalComposer initialConfig={initialConfig}>
+        <div className="editor-shell">
+          <Editor />
+        </div>
+      </LexicalComposer>
     </div>
   );
 }
