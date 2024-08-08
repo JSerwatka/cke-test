@@ -140,17 +140,6 @@ type ShowModal = ReturnType<typeof useModal>[1];
 
 function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
   return [
-    new ComponentPickerOption("Paragraph", {
-      icon: <i className="icon paragraph" />,
-      keywords: ["normal", "paragraph", "p", "text"],
-      onSelect: () =>
-        editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $setBlocksType(selection, () => $createParagraphNode());
-          }
-        }),
-    }),
     ...([1, 2, 3] as const).map(
       (n) =>
         new ComponentPickerOption(`Heading ${n}`, {
@@ -177,12 +166,6 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
       onSelect: () =>
         editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined),
     }),
-    new ComponentPickerOption("Check List", {
-      icon: <i className="icon check" />,
-      keywords: ["check list", "todo list"],
-      onSelect: () =>
-        editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined),
-    }),
     new ComponentPickerOption("Quote", {
       icon: <i className="icon quote" />,
       keywords: ["block quote"],
@@ -191,26 +174,6 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
             $setBlocksType(selection, () => $createQuoteNode());
-          }
-        }),
-    }),
-    new ComponentPickerOption("Code", {
-      icon: <i className="icon code" />,
-      keywords: ["javascript", "python", "js", "codeblock"],
-      onSelect: () =>
-        editor.update(() => {
-          const selection = $getSelection();
-
-          if ($isRangeSelection(selection)) {
-            if (selection.isCollapsed()) {
-              $setBlocksType(selection, () => $createCodeNode());
-            } else {
-              // Will this ever happen?
-              const textContent = selection.getTextContent();
-              const codeNode = $createCodeNode();
-              selection.insertNodes([codeNode]);
-              selection.insertRawText(textContent);
-            }
           }
         }),
     }),
@@ -229,15 +192,6 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
             editor.dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type),
         })
     ),
-    new ComponentPickerOption("GIF", {
-      icon: <i className="icon gif" />,
-      keywords: ["gif", "animate", "image", "file"],
-      onSelect: () =>
-        editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-          altText: "Cat typing on a laptop",
-          src: catTypingGif,
-        }),
-    }),
     new ComponentPickerOption("Image", {
       icon: <i className="icon image" />,
       keywords: ["image", "photo", "picture", "file"],
@@ -246,15 +200,6 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
           <InsertImageDialog activeEditor={editor} onClose={onClose} />
         )),
     }),
-    ...(["left", "center", "right", "justify"] as const).map(
-      (alignment) =>
-        new ComponentPickerOption(`Align ${alignment}`, {
-          icon: <i className={`icon ${alignment}-align`} />,
-          keywords: ["align", "justify", alignment],
-          onSelect: () =>
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, alignment),
-        })
-    ),
   ];
 }
 
