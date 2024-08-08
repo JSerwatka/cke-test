@@ -49,7 +49,6 @@ import {
 import {
   $createParagraphNode,
   $getNodeByKey,
-  $getRoot,
   $getSelection,
   $isElementNode,
   $isRangeSelection,
@@ -76,23 +75,16 @@ import * as React from "react";
 import { IS_APPLE } from "../../utils/canUseDom";
 
 import useModal from "../../hooks/useModal";
-import catTypingGif from "../../images/cat-typing.gif";
 import DropDown, { DropDownItem } from "../../ui/DropDown";
 import DropdownColorPicker from "../../ui/DropdownColorPicker";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { sanitizeUrl } from "../../utils/url";
 import { EmbedConfigs } from "../AutoEmbedPlugin";
-import {
-  INSERT_IMAGE_COMMAND,
-  InsertImageDialog,
-  InsertImagePayload,
-} from "../ImagesPlugin";
+import { InsertImageDialog } from "../ImagesPlugin";
 import FontSize from "./fontSize";
 
 const blockTypeToBlockName = {
   bullet: "Bulleted List",
-  check: "Check List",
-  code: "Code Block",
   h1: "Heading 1",
   h2: "Heading 2",
   h3: "Heading 3",
@@ -328,25 +320,11 @@ function BlockFormatDropDown({
         <span className="text">Numbered List</span>
       </DropDownItem>
       <DropDownItem
-        className={"item " + dropDownActiveClass(blockType === "check")}
-        onClick={formatCheckList}
-      >
-        <i className="icon check-list" />
-        <span className="text">Check List</span>
-      </DropDownItem>
-      <DropDownItem
         className={"item " + dropDownActiveClass(blockType === "quote")}
         onClick={formatQuote}
       >
         <i className="icon quote" />
         <span className="text">Quote</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item " + dropDownActiveClass(blockType === "code")}
-        onClick={formatCode}
-      >
-        <i className="icon code" />
-        <span className="text">Code Block</span>
       </DropDownItem>
     </DropDown>
   );
@@ -866,9 +844,6 @@ export default function ToolbarPlugin({
     },
     [activeEditor, selectedElementKey]
   );
-  const insertGifOnClick = (payload: InsertImagePayload) => {
-    activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
-  };
 
   const canViewerSeeInsertDropdown = !isImageCaption;
   const canViewerSeeInsertCodeButton = !isImageCaption;
@@ -1122,18 +1097,6 @@ export default function ToolbarPlugin({
                 >
                   <i className="icon image" />
                   <span className="text">Image</span>
-                </DropDownItem>
-                <DropDownItem
-                  onClick={() =>
-                    insertGifOnClick({
-                      altText: "Cat typing on a laptop",
-                      src: catTypingGif,
-                    })
-                  }
-                  className="item"
-                >
-                  <i className="icon gif" />
-                  <span className="text">GIF</span>
                 </DropDownItem>
                 {EmbedConfigs.map((embedConfig) => (
                   <DropDownItem
