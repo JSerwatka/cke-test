@@ -20,7 +20,7 @@ import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { CAN_USE_DOM } from "shared/canUseDOM";
+import { CAN_USE_DOM } from "./utils/canUseDom";
 
 import { useSharedHistoryContext } from "./context/SharedHistoryContext";
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
