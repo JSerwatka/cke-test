@@ -3,6 +3,7 @@ import Editor from "./Editor";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
+import { useState } from "react";
 
 function App() {
   const initialConfig = {
@@ -14,11 +15,14 @@ function App() {
     },
     theme: PlaygroundEditorTheme,
   };
+  const [isSaving, setIsSaving] = useState(false);
+
   return (
     <div className="App">
       <LexicalComposer initialConfig={initialConfig}>
+        <button onClick={() => setIsSaving(true)}>Save</button>
         <div className="editor-shell">
-          <Editor />
+          <Editor isSaving={isSaving} />
         </div>
       </LexicalComposer>
     </div>

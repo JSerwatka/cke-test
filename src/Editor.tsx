@@ -38,13 +38,13 @@ import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
+import { EditorState } from "lexical";
+import OnSavePlugin from "./plugins/OnSavePlugin";
 
-export default function Editor(): JSX.Element {
+export default function Editor({ isSaving }: { isSaving: boolean }) {
   const { historyState } = useSharedHistoryContext();
-
   const showTreeView = true;
   const isEditable = useLexicalEditable();
-  const placeholder = "Enter some rich text...";
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
   const [isSmallWidthViewport, setIsSmallWidthViewport] =
@@ -78,6 +78,7 @@ export default function Editor(): JSX.Element {
     <>
       <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
       <div className={`editor-container ${showTreeView ? "tree-view" : ""}`}>
+        <OnSavePlugin isSaving={isSaving} />
         <DragDropPaste />
         <AutoFocusPlugin />
         <ClearEditorPlugin />
@@ -92,7 +93,7 @@ export default function Editor(): JSX.Element {
           contentEditable={
             <div className="editor-scroller">
               <div className="editor" ref={onRef}>
-                <ContentEditable placeholder={placeholder} />
+                <ContentEditable placeholder={"Enter some rich text..."} />
               </div>
             </div>
           }
