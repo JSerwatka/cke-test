@@ -14,8 +14,10 @@ const SetInitialValuePlugin: React.FC<{ initHtml: string }> = ({
         const content = $generateHtmlFromNodes(editor, null);
 
         if (!!initHtml && content !== initHtml) {
+          const initHtmlClean = initHtml.replaceAll("\\n", "</br>");
+
           const parser = new DOMParser();
-          const dom = parser.parseFromString(initHtml, "text/html");
+          const dom = parser.parseFromString(initHtmlClean, "text/html");
           const nodes = $generateNodesFromDOM(editor, dom);
 
           const root = $getRoot();
