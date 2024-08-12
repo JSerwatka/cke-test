@@ -16,13 +16,18 @@ function App() {
     theme: PlaygroundEditorTheme,
   };
   const [isSaving, setIsSaving] = useState(false);
+  const [HTMLTextareaValue, setHTMLTextareaValue] = useState("");
 
   return (
     <div className="App">
+      <textarea onChange={(e) => setHTMLTextareaValue(e.target.value)}>
+        {HTMLTextareaValue}
+      </textarea>
+      <p></p>
       <LexicalComposer initialConfig={initialConfig}>
         <button onClick={() => setIsSaving(true)}>Save</button>
         <div className="editor-shell">
-          <Editor isSaving={isSaving} />
+          <Editor isSaving={isSaving} htmlTextareaValue={HTMLTextareaValue} />
         </div>
       </LexicalComposer>
     </div>

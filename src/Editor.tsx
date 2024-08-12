@@ -25,6 +25,7 @@ import { CAN_USE_DOM } from "./utils/canUseDom";
 import { useSharedHistoryContext } from "./context/SharedHistoryContext";
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
+import SetInitialValuePlugin from "./plugins/SetInitialValuePlugin";
 import ComponentPickerPlugin from "./plugins/ComponentPickerPlugin";
 import DragDropPaste from "./plugins/DragDropPastePlugin";
 import DraggableBlockPlugin from "./plugins/DraggableBlockPlugin";
@@ -38,10 +39,15 @@ import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
-import { EditorState } from "lexical";
 import OnSavePlugin from "./plugins/OnSavePlugin";
 
-export default function Editor({ isSaving }: { isSaving: boolean }) {
+export default function Editor({
+  isSaving,
+  htmlTextareaValue,
+}: {
+  isSaving: boolean;
+  htmlTextareaValue: string;
+}) {
   const { historyState } = useSharedHistoryContext();
   const showTreeView = true;
   const isEditable = useLexicalEditable();
@@ -78,6 +84,7 @@ export default function Editor({ isSaving }: { isSaving: boolean }) {
     <>
       <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
       <div className={`editor-container ${showTreeView ? "tree-view" : ""}`}>
+        <SetInitialValuePlugin initHtml={htmlTextareaValue} />
         <OnSavePlugin isSaving={isSaving} />
         <DragDropPaste />
         <AutoFocusPlugin />
