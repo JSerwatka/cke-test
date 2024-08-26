@@ -198,12 +198,6 @@ pre::-webkit-scrollbar-thumb {
   filter: invert(1);
 }
 
-#options-button {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-}
-
 #test-recorder-button {
   position: fixed;
   left: 70px;
@@ -220,10 +214,6 @@ pre::-webkit-scrollbar-thumb {
   position: fixed;
   left: 170px;
   bottom: 20px;
-}
-
-#options-button::after {
-  background-image: url(images/icons/gear.svg);
 }
 
 #paste-log-button::after {
@@ -476,10 +466,6 @@ i.redo {
   background-image: url(images/icons/arrow-clockwise.svg);
 }
 
-i.sticky {
-  background-image: url(images/icons/sticky.svg);
-}
-
 i.user {
   background-image: url(images/icons/user.svg);
 }
@@ -490,14 +476,6 @@ i.copy {
 
 i.success {
   background-image: url(images/icons/success.svg);
-}
-
-i.prettier {
-  background-image: url(images/icons/prettier.svg);
-}
-
-i.prettier-error {
-  background-image: url(images/icons/prettier-error.svg);
 }
 
 .link-editor .button.active,
@@ -756,18 +734,6 @@ i.prettier-error {
 
 .icon.h3 {
   background-image: url(images/icons/type-h3.svg);
-}
-
-.icon.h4 {
-  background-image: url(images/icons/type-h4.svg);
-}
-
-.icon.h5 {
-  background-image: url(images/icons/type-h5.svg);
-}
-
-.icon.h6 {
-  background-image: url(images/icons/type-h6.svg);
 }
 
 .icon.bullet-list,
