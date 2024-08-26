@@ -29,8 +29,6 @@ import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { CAN_USE_DOM } from "../../utils/canUseDom";
 
-import landscapeImage from "../../images/landscape.jpg";
-import yellowFlowerImage from "../../images/yellow-flower.jpg";
 import {
   $createImageNode,
   $isImageNode,
@@ -52,13 +50,16 @@ export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =
 
 export function InsertImageUriDialogBody({
   onClick,
+  imageLoading,
 }: {
   onClick: (payload: InsertImagePayload) => void;
+  imageLoading: boolean;
 }) {
   const [src, setSrc] = useState("");
   const [altText, setAltText] = useState("");
 
-  const isDisabled = src === "";
+  const isDisabled = src === "" || imageLoading;
+  const buttonText = imageLoading ? 'Uploading...' : 'Confim';
 
   return (
     <>
@@ -82,7 +83,7 @@ export function InsertImageUriDialogBody({
           disabled={isDisabled}
           onClick={() => onClick({ altText, src })}
         >
-          Confirm
+          {buttonText}
         </Button>
       </DialogActions>
     </>
@@ -91,13 +92,16 @@ export function InsertImageUriDialogBody({
 
 export function InsertImageUploadedDialogBody({
   onClick,
+  imageLoading
 }: {
   onClick: (payload: InsertImagePayload) => void;
+  imageLoading: boolean;
 }) {
   const [src, setSrc] = useState("");
   const [altText, setAltText] = useState("");
 
-  const isDisabled = src === "";
+  const isDisabled = src === "" || imageLoading;
+  const buttonText = imageLoading ? 'Uploading...' : 'Confim';
 
   const loadImage = (files: FileList | null) => {
     const reader = new FileReader();
@@ -133,7 +137,7 @@ export function InsertImageUploadedDialogBody({
           disabled={isDisabled}
           onClick={() => onClick({ altText, src })}
         >
-          Confirm
+          {buttonText}
         </Button>
       </DialogActions>
     </>
@@ -148,6 +152,7 @@ export function InsertImageDialog({
   onClose: () => void;
 }): JSX.Element {
   const [mode, setMode] = useState<null | "url" | "file">(null);
+  const [imageLoading, setImageLoading] = useState(false);
   const hasModifier = useRef(false);
 
   useEffect(() => {
@@ -161,8 +166,17 @@ export function InsertImageDialog({
     };
   }, [activeEditor]);
 
-  const onClick = (payload: InsertImagePayload) => {
-    activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
+  const onClick = async (payload: InsertImagePayload) => {
+    setImageLoading(true);
+    let { altText, src } = payload;
+
+    const imgUploaded = await cloudinaryUpload(src);
+    if (imgUploaded.error || !imgUploaded.url) {
+      throw new Error('Failed to upload image');
+    }
+
+    activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, { altText, src: imgUploaded.url });
+    setImageLoading(false);
     onClose();
   };
 
@@ -170,25 +184,6 @@ export function InsertImageDialog({
     <>
       {!mode && (
         <DialogButtonsList>
-          <Button
-            data-test-id="image-modal-option-sample"
-            onClick={() =>
-              onClick(
-                hasModifier.current
-                  ? {
-                      altText:
-                        "Daylight fir trees forest glacier green high ice landscape",
-                      src: landscapeImage,
-                    }
-                  : {
-                      altText: "Yellow flower in tilt shift lens",
-                      src: yellowFlowerImage,
-                    }
-              )
-            }
-          >
-            Sample
-          </Button>
           <Button
             data-test-id="image-modal-option-url"
             onClick={() => setMode("url")}
@@ -203,8 +198,8 @@ export function InsertImageDialog({
           </Button>
         </DialogButtonsList>
       )}
-      {mode === "url" && <InsertImageUriDialogBody onClick={onClick} />}
-      {mode === "file" && <InsertImageUploadedDialogBody onClick={onClick} />}
+      {mode === "url" && <InsertImageUriDialogBody onClick={onClick} imageLoading={imageLoading} />}
+      {mode === "file" && <InsertImageUploadedDialogBody onClick={onClick} imageLoading={imageLoading} />}
     </>
   );
 }
@@ -230,7 +225,7 @@ export default function ImagesPlugin({
           if ($isRootOrShadowRoot(imageNode.getParentOrThrow())) {
             $wrapNodeInElement(imageNode, $createParagraphNode).selectEnd();
           }
-
+            
           return true;
         },
         COMMAND_PRIORITY_EDITOR
@@ -394,3 +389,48 @@ function getDragSelection(event: DragEvent): Range | null | undefined {
 
   return range;
 }
+
+export interface ImageUploadResponse {
+  error: boolean;
+  url?: string;
+}
+
+export async function cloudinaryUpload(image: string | Blob) {
+  return new Promise<ImageUploadResponse>((resolve, reject) => {
+    const cloudinaryPreset = "keepmoving-dev";
+      if (!cloudinaryPreset) {
+          return reject(new Error("No cloudinary preset defined"));
+      }
+
+      const cloudName = "energylab";
+
+      const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+      const xhr = new XMLHttpRequest();
+      const fd = new FormData();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+      xhr.onerror = (e) => {
+          console.error(e);
+          reject(new Error("Error during upload"));
+      };
+
+      xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              const response = JSON.parse(xhr.responseText);
+              const responseUrl = response.secure_url;
+
+              return resolve({
+                  error: false,
+                  url: responseUrl
+              });
+          }
+      };
+
+      fd.append("upload_preset", cloudinaryPreset);
+      fd.append("tags", "admin_upload");
+      fd.append("file", image);
+      xhr.send(fd);
+  });
+}
+
