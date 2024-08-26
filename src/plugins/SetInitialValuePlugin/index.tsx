@@ -6,9 +6,8 @@ import { useLayoutEffect } from "react";
 function addBackwardsCompatiblity(html: string) {
   let htmlClean;
 
-  // old version had \n instead of <br>
-  htmlClean = html.replaceAll("\\n", "</br>");
-  console.log(htmlClean);
+  htmlClean = html.replaceAll("\\n", ""); 
+  htmlClean = htmlClean.replaceAll("\\t", ""); 
 
   return htmlClean;
 }
