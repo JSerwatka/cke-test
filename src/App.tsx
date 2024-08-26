@@ -4,12 +4,20 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
 import { useState } from "react";
+import { TextNode } from "lexical";
+import { ExtendedTextNode } from "./nodes/ExtendedTextNode";
 
 function App() {
   const initialConfig = {
     editorState: null,
     namespace: "Playground",
-    nodes: [...PlaygroundNodes],
+    nodes: [
+      ...PlaygroundNodes,
+      {
+        replace: TextNode,
+        with: (node: TextNode) => new ExtendedTextNode(node.__text),
+      },
+    ],
     onError: (error: Error) => {
       throw error;
     },

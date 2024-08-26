@@ -1,7 +1,17 @@
-import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { CLEAR_HISTORY_COMMAND, $getRoot } from "lexical";
+import { $getRoot, CLEAR_HISTORY_COMMAND } from "lexical";
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
 import { useLayoutEffect } from "react";
+
+function addBackwardsCompatiblity(html: string) {
+  let htmlClean;
+
+  // old version had \n instead of <br>
+  htmlClean = html.replaceAll("\\n", "</br>");
+  console.log(htmlClean);
+
+  return htmlClean;
+}
 
 const SetInitialValuePlugin: React.FC<{ initHtml: string }> = ({
   initHtml = "",
@@ -14,11 +24,12 @@ const SetInitialValuePlugin: React.FC<{ initHtml: string }> = ({
         const content = $generateHtmlFromNodes(editor, null);
 
         if (!!initHtml && content !== initHtml) {
-          const initHtmlClean = initHtml.replaceAll("\\n", "</br>");
+          const initHtmlClean = addBackwardsCompatiblity(initHtml);
 
           const parser = new DOMParser();
           const dom = parser.parseFromString(initHtmlClean, "text/html");
           const nodes = $generateNodesFromDOM(editor, dom);
+          console.log("output nodes", nodes);
 
           const root = $getRoot();
           root.clear();
