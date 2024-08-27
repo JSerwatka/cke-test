@@ -12,8 +12,6 @@ import './PlaygroundEditorTheme.css';
 
 const theme: EditorThemeClasses = {
   image: 'editor-image',
-  mark: 'PlaygroundEditorTheme__mark',
-  markOverlap: 'PlaygroundEditorTheme__markOverlap',
   quote: 'PlaygroundEditorTheme__quote',
   text: {
     code: 'PlaygroundEditorTheme__textCode',
