@@ -8,6 +8,7 @@ function addBackwardsCompatiblity(html: string) {
 
   htmlClean = html.replaceAll("\\n", ""); 
   htmlClean = htmlClean.replaceAll("\\t", ""); 
+  htmlClean = htmlClean.replaceAll("\\\"", "\""); 
 
   return htmlClean;
 }
