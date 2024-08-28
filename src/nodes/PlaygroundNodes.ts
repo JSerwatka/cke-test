@@ -23,12 +23,12 @@ import { ImageNode } from './ImageNode';
 import { KeywordNode } from './KeywordNode';
 import { YouTubeNode } from './YouTubeNode';
 import { ExtendedTextNode } from './ExtendedTextNode';
+import { ExtendedQuoteNode } from './ExtendedQuoteNode';
 
 const PlaygroundNodes: Array<Klass<LexicalNode>> = [
   HeadingNode,
   ListNode,
   ListItemNode,
-  QuoteNode,
   CodeNode,
   TableNode,
   TableCellNode,
@@ -45,6 +45,7 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
   YouTubeNode,
   MarkNode,
   ExtendedTextNode,
+  ExtendedQuoteNode
 ];
 
 export default PlaygroundNodes;

@@ -12,7 +12,6 @@ import './PlaygroundEditorTheme.css';
 
 const theme: EditorThemeClasses = {
   image: 'editor-image',
-  quote: 'PlaygroundEditorTheme__quote',
   text: {
     code: 'PlaygroundEditorTheme__textCode',
     strikethrough: 'PlaygroundEditorTheme__textStrikethrough',
