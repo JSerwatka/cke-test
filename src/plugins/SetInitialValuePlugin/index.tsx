@@ -29,7 +29,6 @@ const SetInitialValuePlugin: React.FC<{ initHtml: string }> = ({
           const parser = new DOMParser();
           const dom = parser.parseFromString(initHtmlClean, "text/html");
           const nodes = $generateNodesFromDOM(editor, dom);
-          console.log("output nodes", nodes);
 
           const root = $getRoot();
           root.clear();
