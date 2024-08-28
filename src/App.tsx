@@ -1,4 +1,3 @@
-import "./App.css";
 import Editor from "./Editor";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
@@ -6,6 +5,8 @@ import PlaygroundNodes from "./nodes/PlaygroundNodes";
 import { useState } from "react";
 import { TextNode } from "lexical";
 import { ExtendedTextNode } from "./nodes/ExtendedTextNode";
+import { ExtendedQuoteNode } from "./nodes/ExtendedQuoteNode";
+import { QuoteNode } from '@lexical/rich-text';
 
 function App() {
   const initialConfig = {
@@ -17,6 +18,10 @@ function App() {
         replace: TextNode,
         with: (node: TextNode) => new ExtendedTextNode(node.__text),
       },
+      {
+        replace: QuoteNode,
+        with: (node: QuoteNode) => new ExtendedQuoteNode(),
+      }
     ],
     onError: (error: Error) => {
       throw error;

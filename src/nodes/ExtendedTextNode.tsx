@@ -7,6 +7,8 @@ import {
   TextNode,
   SerializedTextNode,
   LexicalNode,
+  EditorConfig,
+  LexicalEditor,
 } from "lexical";
 
 export class ExtendedTextNode extends TextNode {
@@ -21,6 +23,18 @@ export class ExtendedTextNode extends TextNode {
   static clone(node: ExtendedTextNode): ExtendedTextNode {
     return new ExtendedTextNode(node.__text, node.__key);
   }
+
+  createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement {
+    const dom = super.createDOM(config, editor);
+    if (this.hasFormat('code')) {
+      dom.style.fontFamily = 'Menlo, Consolas, Monaco, monospace';
+      dom.style.padding = '1px 0.25rem';
+      dom.style.backgroundColor = 'rgb(240, 242, 245)';
+      dom.style.fontSize = '94%';
+    }
+    return dom;
+  }
+
 
   static importDOM(): DOMConversionMap | null {
     const importers = TextNode.importDOM();
