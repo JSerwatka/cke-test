@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
+import { $generateNodesFromDOM } from '@lexical/html';
 import { $getRoot, $setSelection, COMMAND_PRIORITY_LOW, LexicalCommand, createCommand } from 'lexical';
 import {
     generateContent,
@@ -19,8 +19,11 @@ const HtmlTogglePlugin = () => {
 
     const handleHtmlChange = (e:any) => {
         setHtmlContent(e.target.value);
-        htmlContentRef.current = e.target.value
     };
+
+    useEffect(() => {
+      htmlContentRef.current = htmlContent
+    }, [htmlContent]);
 
     useEffect(() => {
       editor.registerCommand(
