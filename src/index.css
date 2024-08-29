@@ -476,6 +476,14 @@ i.success {
   background-image: url(images/icons/success.svg);
 }
 
+i.edit-mode-code {
+  background-image: url(images/icons/edit-mode-code.svg);
+}
+
+i.edit-mode-view {
+  background-image: url(images/icons/edit-mode-view.svg);
+}
+
 .link-editor .button.active,
 .toolbar .button.active {
   background-color: rgb(223, 232, 250);

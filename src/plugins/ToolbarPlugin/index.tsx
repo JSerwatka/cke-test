@@ -73,6 +73,7 @@ import { sanitizeUrl } from "../../utils/url";
 import { EmbedConfigs } from "../AutoEmbedPlugin";
 import { InsertImageDialog } from "../ImagesPlugin";
 import FontSize from "./fontSize";
+import { TOGGLE_HTML_MODE_COMMAND } from "../ToggleHtmlModePlugin";
 
 const blockTypeToBlockName = {
   bullet: "Bulleted List",
@@ -445,6 +446,7 @@ export default function ToolbarPlugin({
   const [isRTL, setIsRTL] = useState(false);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [isImageCaption, setIsImageCaption] = useState(false);
+  const [isHtmlMode, setIsHtmlMode] = useState(false);
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -630,6 +632,10 @@ export default function ToolbarPlugin({
       COMMAND_PRIORITY_NORMAL
     );
   }, [activeEditor, isLink, setIsLinkEditMode]);
+
+  useEffect(() => {
+    editor.dispatchCommand(TOGGLE_HTML_MODE_COMMAND, isHtmlMode);
+  }, [isHtmlMode]);
 
   const applyStyleText = useCallback(
     (styles: Record<string, string>, skipHistoryStack?: boolean) => {
@@ -983,6 +989,17 @@ export default function ToolbarPlugin({
         editor={activeEditor}
         isRTL={isRTL}
       />
+      <button
+        className={"toolbar-item spaced"}
+        onClick={() => {
+          setIsHtmlMode((currState) => !currState); 
+        }}
+        type="button"
+        title={isHtmlMode ?  "Edit View Mode" : "Edit HTML Mode" } 
+      >
+          
+        {isHtmlMode ? <i className="icon edit-mode-view" /> : <i className="icon edit-mode-code" />}
+      </button>
 
       {modal}
     </div>

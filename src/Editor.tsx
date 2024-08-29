@@ -40,6 +40,7 @@ import TreeViewPlugin from "./plugins/TreeViewPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 import OnSavePlugin from "./plugins/OnSavePlugin";
+import HtmlTogglePlugin from "./plugins/ToggleHtmlModePlugin";
 
 export default function Editor({
   isSaving,
@@ -86,6 +87,7 @@ export default function Editor({
       <div className={`editor-container ${showTreeView ? "tree-view" : ""}`}>
         <SetInitialValuePlugin initHtml={htmlTextareaValue} />
         <OnSavePlugin isSaving={isSaving} />
+        <HtmlTogglePlugin />
         <DragDropPaste />
         <AutoFocusPlugin />
         <ClearEditorPlugin />
