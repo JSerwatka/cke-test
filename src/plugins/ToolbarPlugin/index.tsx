@@ -997,7 +997,6 @@ export default function ToolbarPlugin({
         type="button"
         title={isHtmlMode ?  "Edit View Mode" : "Edit HTML Mode" } 
       >
-          
         {isHtmlMode ? <i className="icon edit-mode-view" /> : <i className="icon edit-mode-code" />}
       </button>
 
