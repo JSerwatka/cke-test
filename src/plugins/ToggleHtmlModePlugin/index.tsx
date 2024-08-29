@@ -52,15 +52,24 @@ const HtmlTogglePlugin = () => {
 
 
     return (
-      <div className="flex flex-col gap-2">
+      <>
         {isHTML && (
           <textarea
             value={htmlContent}
             onChange={handleHtmlChange}
-            className="w-full h-64 p-2 border rounded"
+            style={{
+              resize: "none",
+              width: "99.4%",
+              height: "96%",
+              zIndex: 10,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              overflow: "auto"
+            }}
           />
         )}
-      </div>
+      </>
       );
 };
 
