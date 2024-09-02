@@ -6,6 +6,7 @@ import {
     generateContent,
     useLexicalCommandsLog
   } from '@lexical/devtools-core';
+import { getStyleTagToString, preserveStyleTag } from '../../utils/preserveStylesTag';
 
   export const TOGGLE_HTML_MODE_COMMAND: LexicalCommand<boolean> =
   createCommand("TOGGLE_HTML_MODE_COMMAND");
@@ -33,15 +34,18 @@ const HtmlTogglePlugin = () => {
           if (isHtmlMode) {
             // Switch from normal to HTML mode
             editor.update(() => {
+              const styles = getStyleTagToString();
               const html = generateContent(editor, commandsLog, true);
-              setHtmlContent(html);
+              setHtmlContent(styles + html);
             });
           } else {
             // Switch from HTML to normal mode
             editor.update(() => {
               const parser = new DOMParser();
               const dom = parser.parseFromString(htmlContentRef.current, 'text/html');
+              preserveStyleTag(dom)
               const nodes = $generateNodesFromDOM(editor, dom);
+
               $getRoot().clear();
               $getRoot().append(...nodes);
               $setSelection(null);
