@@ -14,7 +14,9 @@ export class ExtendedParagraphNode extends ParagraphNode {
   createDOM(config: EditorConfig) {
     const dom = super.createDOM(config);
 
-    dom.className = this.__className ?? null;
+    if (this.__className) {
+      dom.className = this.__className;
+    }
 
     return dom;
   }

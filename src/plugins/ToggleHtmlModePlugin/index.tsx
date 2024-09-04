@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $generateNodesFromDOM } from '@lexical/html';
+import { $generateNodesFromDOM } from '../../utils/customLexicalHTML';
 import { $getRoot, $setSelection, COMMAND_PRIORITY_LOW, LexicalCommand, createCommand } from 'lexical';
 import {
     generateContent,

@@ -25,6 +25,7 @@ export class ExtendedQuoteNode extends QuoteNode {
         element.style.borderLeftWidth = '4px';
         element.style.borderLeftStyle = 'solid';
         element.style.paddingLeft = '16px';
+        element.className = this.__className ?? null;
         return element;
     }
 }
