@@ -3,10 +3,11 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
 import { useState } from "react";
-import { TextNode } from "lexical";
+import { ParagraphNode, TextNode } from "lexical";
 import { ExtendedTextNode } from "./nodes/ExtendedTextNode";
 import { ExtendedQuoteNode } from "./nodes/ExtendedQuoteNode";
 import { QuoteNode } from '@lexical/rich-text';
+import { ExtendedParagraphNode } from "./nodes/ExtendedParagraphNode";
 
 function App() {
   const initialConfig = {
@@ -21,6 +22,12 @@ function App() {
       {
         replace: QuoteNode,
         with: (node: QuoteNode) => new ExtendedQuoteNode(),
+      },
+      {
+        replace: ParagraphNode,
+        with: (node: ParagraphNode) => {
+          return new ExtendedParagraphNode();
+        }
       }
     ],
     onError: (error: Error) => {

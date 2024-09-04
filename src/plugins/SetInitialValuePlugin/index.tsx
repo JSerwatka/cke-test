@@ -1,9 +1,9 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getRoot, CLEAR_HISTORY_COMMAND } from "lexical";
-import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
+import { $generateHtmlFromNodes } from "@lexical/html";
 import { useLayoutEffect } from "react";
 import { preserveStyleTag } from "../../utils/preserveStylesTag";
-
+import { $generateNodesFromDOM } from "../../utils/customLexicalHTML";
 
 function addBackwardsCompatiblity(html: string) {
   let htmlClean;

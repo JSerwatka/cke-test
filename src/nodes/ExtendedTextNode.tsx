@@ -26,6 +26,8 @@ export class ExtendedTextNode extends TextNode {
 
   createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement {
     const dom = super.createDOM(config, editor);
+    dom.className = this.__className ?? null;
+
     if (this.hasFormat('code')) {
       dom.style.fontFamily = 'Menlo, Consolas, Monaco, monospace';
       dom.style.padding = '1px 0.25rem';
