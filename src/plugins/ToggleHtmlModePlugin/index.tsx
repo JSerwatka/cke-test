@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $generateNodesFromDOM } from '../../utils/customLexicalHTML';
 import { $getRoot, $setSelection, COMMAND_PRIORITY_LOW, LexicalCommand, createCommand } from 'lexical';
 import {
     generateContent,
     useLexicalCommandsLog
   } from '@lexical/devtools-core';
-import { getStyleTagToString, preserveStyleTag } from '../../utils/preserveStylesTag';
+import { $generateNodesFromDOM } from "@lexical/html"
 
   export const TOGGLE_HTML_MODE_COMMAND: LexicalCommand<boolean> =
   createCommand("TOGGLE_HTML_MODE_COMMAND");
@@ -34,16 +33,14 @@ const HtmlTogglePlugin = () => {
           if (isHtmlMode) {
             // Switch from normal to HTML mode
             editor.update(() => {
-              const styles = getStyleTagToString();
               const html = generateContent(editor, commandsLog, true);
-              setHtmlContent(styles + html);
+              setHtmlContent(html);
             });
           } else {
             // Switch from HTML to normal mode
             editor.update(() => {
               const parser = new DOMParser();
               const dom = parser.parseFromString(htmlContentRef.current, 'text/html');
-              preserveStyleTag(dom)
               const nodes = $generateNodesFromDOM(editor, dom);
 
               $getRoot().clear();

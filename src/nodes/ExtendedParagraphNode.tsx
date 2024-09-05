@@ -11,11 +11,24 @@ export class ExtendedParagraphNode extends ParagraphNode {
     return new ExtendedParagraphNode(node.__key);
   }
 
+  static importDOM() {
+    return {
+      p: (node: HTMLElement) => ({
+        conversion: () => {
+          const paragraphNode = new ExtendedParagraphNode();
+          paragraphNode.__style = node.getAttribute("style") || "";
+          return { node: paragraphNode };
+        },
+        priority: 1 as const,
+      }),
+    };
+  }
+
   createDOM(config: EditorConfig) {
     const dom = super.createDOM(config);
-
-    if (this.__className) {
-      dom.className = this.__className;
+    
+    if (this.__style) {
+      dom.setAttribute("style", this.__style);
     }
 
     return dom;

@@ -2,8 +2,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { $getRoot, CLEAR_HISTORY_COMMAND } from "lexical";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import { useLayoutEffect } from "react";
-import { preserveStyleTag } from "../../utils/preserveStylesTag";
-import { $generateNodesFromDOM } from "../../utils/customLexicalHTML";
+import { $generateNodesFromDOM } from "@lexical/html";
 
 function addBackwardsCompatiblity(html: string) {
   let htmlClean;
@@ -31,7 +30,6 @@ const SetInitialValuePlugin: React.FC<{ initHtml: string }> = ({
           const parser = new DOMParser();
           
           const dom = parser.parseFromString(initHtmlClean, "text/html");
-          preserveStyleTag(dom);
 
           const nodes = $generateNodesFromDOM(editor, dom);
 

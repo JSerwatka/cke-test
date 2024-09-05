@@ -3,10 +3,11 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
 import { useState } from "react";
-import { ParagraphNode, TextNode } from "lexical";
+import {  ParagraphNode, TextNode } from "lexical";
 import { ExtendedTextNode } from "./nodes/ExtendedTextNode";
 import { ExtendedQuoteNode } from "./nodes/ExtendedQuoteNode";
 import { QuoteNode } from '@lexical/rich-text';
+import HTMLRawEditor from "./HTMLRawEditor";
 import { ExtendedParagraphNode } from "./nodes/ExtendedParagraphNode";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
   };
   const [isSaving, setIsSaving] = useState(false);
   const [HTMLTextareaValue, setHTMLTextareaValue] = useState("");
+  const [isRawMode, setIsRawMode] = useState(false);
 
   return (
     <div className="App">
@@ -44,12 +46,16 @@ function App() {
         {HTMLTextareaValue}
       </textarea>
       <p></p>
+      <input type="checkbox" onChange={(e) => setIsRawMode(e.target.checked)} />
+      {isRawMode ? <HTMLRawEditor /> : (
       <LexicalComposer initialConfig={initialConfig}>
-        <button onClick={() => setIsSaving(true)}>Save</button>
-        <div className="editor-shell">
-          <Editor isSaving={isSaving} htmlTextareaValue={HTMLTextareaValue} />
-        </div>
-      </LexicalComposer>
+      <button onClick={() => setIsSaving(true)}>Save</button>
+      <div className="editor-shell">
+        <Editor isSaving={isSaving} htmlTextareaValue={HTMLTextareaValue} />
+      </div>
+    </LexicalComposer>
+      )} 
+
     </div>
   );
 }
