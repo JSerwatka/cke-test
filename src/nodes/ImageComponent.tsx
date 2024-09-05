@@ -117,20 +117,14 @@ export default function ImageComponent({
   height,
   maxWidth,
   resizable,
-  showCaption,
-  caption,
-  captionsEnabled,
 }: {
   altText: string;
-  caption: LexicalEditor;
   height: "inherit" | number;
   maxWidth: number;
   nodeKey: NodeKey;
   resizable: boolean;
-  showCaption: boolean;
   src: string;
   width: "inherit" | number;
-  captionsEnabled: boolean;
 }): JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const [isSelected, setSelected, clearSelection] =
