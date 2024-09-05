@@ -94,5 +94,6 @@ const containerStyle: React.CSSProperties = {
   const iframeStyle: React.CSSProperties = {
     width: '100%',
     height: '100%',
-    border: 'none',
+    border: '1px solid black',
+    backgroundColor: 'beige',
   };
