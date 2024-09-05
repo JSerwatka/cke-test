@@ -50,7 +50,7 @@ export default function Editor({
   htmlTextareaValue: string;
 }) {
   const { historyState } = useSharedHistoryContext();
-  const showTreeView = true;
+  const showTreeView = false;
   const isEditable = useLexicalEditable();
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
@@ -110,7 +110,7 @@ export default function Editor({
         />
         <ListPlugin />
         <CheckListPlugin />
-        <ImagesPlugin />
+        <ImagesPlugin/>
         <LinkPlugin />
         <YouTubePlugin />
         <ClickableLinkPlugin disabled={isEditable} />
