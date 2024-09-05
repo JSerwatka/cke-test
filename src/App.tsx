@@ -37,25 +37,33 @@ function App() {
     theme: PlaygroundEditorTheme,
   };
   const [isSaving, setIsSaving] = useState(false);
-  const [HTMLTextareaValue, setHTMLTextareaValue] = useState("");
+  const [exportHTML, setExportHTML] = useState("");
+  const HTMLTextareaValue = "<p>Please edit me</p>" 
   const [isRawMode, setIsRawMode] = useState(false);
 
   return (
     <div className="App">
-      <textarea onChange={(e) => setHTMLTextareaValue(e.target.value)}>
-        {HTMLTextareaValue}
-      </textarea>
-      <p></p>
-      <label htmlFor="raw-mode">Raw Mode?</label>
-      <input id="raw-mode" type="checkbox" onChange={(e) => setIsRawMode(e.target.checked)}  />
-      {isRawMode ? <HTMLRawEditor /> : (
+      <div style={{"backgroundColor": "rgb(239 204 141)", "padding": "10px", "border": "1px solid black"}}>
+        <label htmlFor="raw-mode">Raw Mode?</label>
+        <input id="raw-mode" type="checkbox" onChange={(e) => setIsRawMode(e.target.checked)}  />
+      </div>
+      {isRawMode ? <HTMLRawEditor setExportHTML={setExportHTML} isSaving={isSaving} setIsSaving={setIsSaving} /> : (
       <LexicalComposer initialConfig={initialConfig}>
-      <button onClick={() => setIsSaving(true)}>Save</button>
       <div className="editor-shell">
-        <Editor isSaving={isSaving} htmlTextareaValue={HTMLTextareaValue} />
+        <Editor isSaving={isSaving} setIsSaving={setIsSaving} setExportHTML={setExportHTML} htmlTextareaValue={HTMLTextareaValue} />
       </div>
     </LexicalComposer>
       )} 
+      <div>
+        <button onClick={() => setIsSaving(true)}>Export</button>
+        {exportHTML && (
+              <div style={{"backgroundColor": "rgb(193 231 198)", "border": "1px solid black", "marginTop": "20px"}}>
+                <div style={{"marginBottom": "15px", "fontSize": "18px", backgroundColor: "white", "padding": "10px"}}>Exported HTML</div>
+                <div style={{"padding": "10px ", "whiteSpace": "pre-wrap"}}>{exportHTML}</div>
+              </div>
+          )}  
+
+      </div>
 
     </div>
   );

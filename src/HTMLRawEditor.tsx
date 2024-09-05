@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useDeferredValue } from 'react';
 
-const HTMLRawEditor = () => {
+const HTMLRawEditor = ({ setExportHTML, setIsSaving, isSaving }: { setExportHTML: React.Dispatch<React.SetStateAction<string>>; setIsSaving: React.Dispatch<React.SetStateAction<boolean>>; isSaving: boolean; }) => {
   const [html, setHtml] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const deferredHtml = useDeferredValue(html);
@@ -20,6 +20,15 @@ const HTMLRawEditor = () => {
       setError((err as Error).message);
     }
   }, [deferredHtml]);
+
+
+
+  useEffect(() => {
+    if (isSaving) {
+      setExportHTML(html);
+      setIsSaving(false);
+    }
+  }, [isSaving ]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setHtml(e.target.value);
@@ -53,7 +62,8 @@ export default HTMLRawEditor;
 
 const containerStyle: React.CSSProperties = {
     display: 'flex',
-    height: '100vh',
+    height: '50vh',
+    margin: '20px 0',
   };
 
   const textareaStyle: React.CSSProperties = {

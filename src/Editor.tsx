@@ -44,10 +44,14 @@ import HtmlTogglePlugin from "./plugins/ToggleHtmlModePlugin";
 
 export default function Editor({
   isSaving,
+  setIsSaving,
   htmlTextareaValue,
+  setExportHTML
 }: {
   isSaving: boolean;
+  setIsSaving: React.Dispatch<React.SetStateAction<boolean>>;
   htmlTextareaValue: string;
+  setExportHTML: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const { historyState } = useSharedHistoryContext();
   const showTreeView = false;
@@ -86,7 +90,7 @@ export default function Editor({
       <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
       <div className={`editor-container ${showTreeView ? "tree-view" : ""}`}>
         <SetInitialValuePlugin initHtml={htmlTextareaValue} />
-        <OnSavePlugin isSaving={isSaving} />
+        <OnSavePlugin setIsSaving={setIsSaving} isSaving={isSaving} setExportHTML={setExportHTML} />
         <HtmlTogglePlugin />
         <DragDropPaste />
         <AutoFocusPlugin />
