@@ -46,7 +46,8 @@ function App() {
         {HTMLTextareaValue}
       </textarea>
       <p></p>
-      <input type="checkbox" onChange={(e) => setIsRawMode(e.target.checked)} />
+      <label htmlFor="raw-mode">Raw Mode?</label>
+      <input id="raw-mode" type="checkbox" onChange={(e) => setIsRawMode(e.target.checked)}  />
       {isRawMode ? <HTMLRawEditor /> : (
       <LexicalComposer initialConfig={initialConfig}>
       <button onClick={() => setIsSaving(true)}>Save</button>
